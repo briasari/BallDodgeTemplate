@@ -19,7 +19,7 @@ namespace BallDodgeTemplate
 
         private void easyButton_Click(object sender, EventArgs e)
         {
-            
+            Form1.ChangeScreen(this, new GameScreen());
         }
 
         private void mediumButton_Click(object sender, EventArgs e)
@@ -37,5 +37,9 @@ namespace BallDodgeTemplate
             Application.Exit();
         }
 
+        private void MenuScreen_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

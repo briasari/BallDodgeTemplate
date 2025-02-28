@@ -46,5 +46,10 @@ namespace BallDodgeTemplate
             f.Controls.Add(next);
             next.Focus();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
