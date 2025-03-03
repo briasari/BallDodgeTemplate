@@ -26,35 +26,67 @@ namespace BallDodgeTemplate
         SolidBrush goldRodBrush = new SolidBrush(Color.Goldenrod);
         SolidBrush redBrush = new SolidBrush(Color.Red);
 
+
+        public static int points;
+        public static int lives = 3;
+
         public GameScreen()
         {
             InitializeComponent();
+
             screenWidth = this.Width;
             screenHeight = this.Height;
-            InitializeGame();
 
-            hero = new Player();
+            InitializeGame();
+            
         }
 
         public void InitializeGame()
         {
+            hero = new Player();
+
             int x = randGen.Next(20, this.Width - 50);
             int y = randGen.Next(20, this.Height - 50);
 
             chaseBall = new Ball(x, y, 8, 8);
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 5; i++)
             {
-                x = randGen.Next(20, this.Width - 50);
-                y = randGen.Next(20, this.Height - 50);
-
-                Ball b = new Ball(x, y, 8, 8);
-                balls.Add(b);
+                CreateBall();
             }
+        }
+
+        private void CreateBall()
+        {
+            int x = randGen.Next(20, this.Width - 50);
+            int y = randGen.Next(20, this.Height - 50);
+
+            Ball b = new Ball(x, y, 8, 8);
+            balls.Add(b);
         }
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
+            #region Move code
+            //moving hero
+            if (rightArrowDown == true)
+            {
+                hero.Move("right");
+            }
+            if (leftArrowDown == true)
+            {
+                hero.Move("left");
+            }
+            if (downArrowDown == true)
+            {
+                hero.Move("down");
+            }
+            if (upArrowDown == true)
+            {
+                hero.Move("up");
+            }
+
+            //moving chaseball
             chaseBall.Move();
 
             foreach (Ball b in balls)
@@ -62,7 +94,33 @@ namespace BallDodgeTemplate
                 b.Move();
             }
 
+            #endregion
+
+            if (hero.Collision(chaseBall))
+            {
+                points++;
+
+                CreateBall();
+            }
+
+            foreach(Ball b in balls)
+            {
+                if (hero.Collision(b)){
+                    lives--;
+                }
+            }
+
+            if (lives == 0)
+            {
+                gameTimer.Stop();
+            }
+
             Refresh();
+        }
+
+        private void GameScreen_Load(object sender, EventArgs e)
+        {
+
         }
 
         private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -113,6 +171,10 @@ namespace BallDodgeTemplate
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
+            //update labels
+            livesLabel.Text = $"lives: {lives}";
+            pointsLabel.Text = $"points: {points}";
+
             //hero
             e.Graphics.FillRectangle(goldRodBrush, hero.x, hero.y, hero.width, hero.height);
 

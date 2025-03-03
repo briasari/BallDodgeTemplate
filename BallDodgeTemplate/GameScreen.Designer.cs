@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
+            this.livesLabel = new System.Windows.Forms.Label();
+            this.pointsLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // gameTimer
@@ -38,23 +40,47 @@
             this.gameTimer.Interval = 20;
             this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
             // 
+            // livesLabel
+            // 
+            this.livesLabel.AutoSize = true;
+            this.livesLabel.Location = new System.Drawing.Point(4, 4);
+            this.livesLabel.Name = "livesLabel";
+            this.livesLabel.Size = new System.Drawing.Size(38, 16);
+            this.livesLabel.TabIndex = 0;
+            this.livesLabel.Text = "lives:";
+            // 
+            // pointsLabel
+            // 
+            this.pointsLabel.AutoSize = true;
+            this.pointsLabel.Location = new System.Drawing.Point(577, 4);
+            this.pointsLabel.Name = "pointsLabel";
+            this.pointsLabel.Size = new System.Drawing.Size(46, 16);
+            this.pointsLabel.TabIndex = 1;
+            this.pointsLabel.Text = "points:";
+            // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LemonChiffon;
+            this.Controls.Add(this.pointsLabel);
+            this.Controls.Add(this.livesLabel);
             this.DoubleBuffered = true;
             this.Name = "GameScreen";
             this.Size = new System.Drawing.Size(700, 700);
+            this.Load += new System.EventHandler(this.GameScreen_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.GameScreen_Paint);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GameScreen_KeyUp);
             this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.GameScreen_PreviewKeyDown);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Timer gameTimer;
+        private System.Windows.Forms.Label livesLabel;
+        private System.Windows.Forms.Label pointsLabel;
     }
 }
